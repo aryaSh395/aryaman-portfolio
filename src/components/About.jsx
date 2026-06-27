@@ -15,7 +15,7 @@ const INFO = [
   { label: 'Degree',   value: 'B.Tech Information Technology' },
   { label: 'Phone',    value: '+91 7891039292' },
   { label: 'CGPA',     value: '9.0 / 10.0' },
-  { label: 'LinkedIn', value: 'linkedin.com/in/aryaman-sharma-807562107/' },
+  { label: 'LinkedIn', value: 'linkedin.com/in/aryaman-sharma-807562107/', href: 'https://linkedin.com/in/aryaman-sharma-807562107/' },
 ];
 
 export default function About() {
@@ -31,14 +31,17 @@ export default function About() {
           </p>
         </div>
         <div className="info-grid reveal delay-1">
-          {INFO.map(({ label, value }, i) => {
+          {INFO.map(({ label, value, href }, i) => {
             const Icon = icons[label];
             return (
               <div key={label} className={`info-item glass-card reveal delay-${i % 3 + 1}`}>
                 <div className="info-icon"><Icon /></div>
                 <div>
                   <div className="info-label">{label}</div>
-                  <div className="info-value">{value}</div>
+                  {href
+                    ? <a href={href} target="_blank" rel="noreferrer" className="info-value" style={{ color: '#a5b4fc', textDecoration: 'none' }}>{value}</a>
+                    : <div className="info-value">{value}</div>
+                  }
                 </div>
               </div>
             );
