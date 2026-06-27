@@ -46,7 +46,7 @@ export default function Hero() {
           <span className="hero-badge-dot" />
           Shopify Developer
         </div>
-        <h1 className="hero-name reveal delay-1" style={{ fontSize: 96, textAlign: 'center' }}>
+        <h1 className="hero-name reveal delay-1" style={{ textAlign: 'center' }}>
           ARYAMAN
           <span className="line-2">SHARMA</span>
         </h1>
@@ -55,10 +55,10 @@ export default function Hero() {
         </p>
         <div className="hero-btns reveal delay-3" style={{ justifyContent: 'center' }}>
           <MagneticBtn href="#projects" className="btn-glow">
-            View My Work <ArrowIcon />
+            <span>View My Work</span> <ArrowIcon />
           </MagneticBtn>
           <MagneticBtn href="#contact" className="btn-glass">
-            Contact Me <EmailIcon />
+            <span>Contact Me</span> <EmailIcon />
           </MagneticBtn>
         </div>
         <div className="hero-socials reveal delay-4" style={{ justifyContent: 'center' }}>
