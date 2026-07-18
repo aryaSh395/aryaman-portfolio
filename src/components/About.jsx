@@ -12,7 +12,7 @@ function CharFade({ segments }) {
   let ci = 0;
   return segments.map((seg, si) => {
     const chars = seg.t.split('').map((ch) => (
-      <span key={ci} className="char" style={{ '--ci': ci++ }}>{ch === ' ' ? ' ' : ch}</span>
+      <span key={ci} className="char" style={{ '--ci': ci++ }}>{ch === ' ' ? ' ' : ch}</span>
     ));
     return seg.b ? <strong key={si}>{chars}</strong> : <React.Fragment key={si}>{chars}</React.Fragment>;
   });
