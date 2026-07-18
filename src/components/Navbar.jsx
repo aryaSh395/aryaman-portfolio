@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Slot from './Slot';
 
 const DownloadIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -61,9 +62,10 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Lock body scroll when menu open
+  // Lock scroll when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
+    if (menuOpen) window.__lenis?.stop(); else window.__lenis?.start();
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
@@ -106,7 +108,7 @@ export default function Navbar() {
           </ul>
 
           <a href="/Aryaman_Sharma_Resume.pdf" download="Aryaman_Sharma_Resume.pdf" className="nav-btn nav-btn-desktop">
-            <span>Resume</span> <DownloadIcon />
+            <Slot>Resume</Slot> <DownloadIcon />
           </a>
 
           {/* Hamburger */}

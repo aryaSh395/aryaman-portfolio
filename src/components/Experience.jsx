@@ -47,7 +47,7 @@ export default function Experience() {
       <div className="section-inner" style={{ maxWidth: 860 }}>
         <div className="section-head reveal">
           <div className="section-kicker">03 — experience</div>
-          <h2 className="section-title">Where I've <span className="grad-text">worked</span></h2>
+          <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Where I've <span className="grad-text">worked</span></span></span></h2>
         </div>
 
         <div className="exp-list">

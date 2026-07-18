@@ -28,7 +28,10 @@
   --radius:      20px;
 }
 
-html { scroll-behavior: smooth; }
+/* Lenis smooth scroll */
+html { scroll-behavior: auto; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
 
 body {
   font-family: var(--font-body);
@@ -103,6 +106,131 @@ body::before {
   opacity: 0.032;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* ─── PRELOADER ─── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1),
+              border-radius 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.preloader.exit {
+  transform: translateY(-100%);
+  border-bottom-left-radius: 45% 90px;
+  border-bottom-right-radius: 45% 90px;
+}
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  transition: opacity 0.3s;
+}
+.preloader.exit .preloader-inner { opacity: 0; }
+.preloader-logo { font-family: var(--font-mono); font-size: 20px; font-weight: 600; color: var(--text); }
+.preloader-logo .accent { color: var(--indigo-soft); }
+.preloader-count {
+  font-family: var(--font-display);
+  font-size: 68px;
+  font-weight: 700;
+  letter-spacing: -3px;
+  line-height: 1;
+  min-width: 130px;
+  text-align: center;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-variant-numeric: tabular-nums;
+}
+.preloader-bar {
+  width: 200px;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.preloader-bar-fill {
+  height: 100%;
+  background: var(--grad);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(109,112,246,0.6);
+}
+.preloader-tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 3px; color: var(--text-3); }
+
+/* ─── SLOT HOVER (rolling label) ─── */
+.slot {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.slot-a, .slot-b {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.slot-b { position: absolute; inset: 0; transform: translateY(110%); }
+a:hover .slot-a, button:hover .slot-a { transform: translateY(-110%); }
+a:hover .slot-b, button:hover .slot-b { transform: translateY(0); }
+
+/* ─── MASKED TITLE REVEAL ─── */
+.tmask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.tmask-inner {
+  display: block;
+  transform: translateY(115%);
+  transition: transform 1s var(--ease) 0.05s;
+}
+.revealed .tmask-inner { transform: translateY(0); }
+
+/* ─── SIDE PROGRESS RAIL ─── */
+.sidenav {
+  position: fixed;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  z-index: 900;
+}
+.sidenav-item { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.sidenav-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.5px;
+  color: var(--text-3);
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.3s, transform 0.3s, color 0.3s;
+}
+.sidenav-line {
+  width: 16px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--text-3);
+  transition: width 0.35s var(--ease), background 0.3s, box-shadow 0.3s;
+}
+.sidenav-item:hover .sidenav-label,
+.sidenav-item.active .sidenav-label { opacity: 1; transform: translateX(0); }
+.sidenav-item:hover .sidenav-line { background: var(--text-2); }
+.sidenav-item.active .sidenav-label { color: var(--cyan); }
+.sidenav-item.active .sidenav-line {
+  width: 34px;
+  background: var(--grad);
+  box-shadow: 0 0 10px rgba(34,211,238,0.4);
+}
+@media (max-width: 1024px) { .sidenav { display: none; } }
 
 /* ─── SCROLL PROGRESS ─── */
 .scroll-progress {
@@ -355,13 +483,32 @@ section { position: relative; z-index: 1; padding: 110px 48px; }
   color: var(--text);
   margin-bottom: 24px;
 }
-.hero-name .line-2 {
-  display: block;
+.hero-name .line-2 { display: block; }
+/* per-letter gradient sampled along the word */
+.hero-name .line-2 .ltr {
   background: var(--grad-text);
+  background-size: 300% 100%;
+  background-position-x: calc(var(--p, 0) * 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* letter-by-letter intro: chars rise out of their masks after the preloader */
+.hero-name .ltr-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.hero-name .ltr {
+  display: inline-block;
+  transform: translateY(115%);
+}
+body.intro-done .hero-name .ltr {
+  animation: ltr-up 0.85s var(--ease) forwards;
+  animation-delay: calc(0.045s * var(--i, 0) + 0.1s);
+}
+@keyframes ltr-up { to { transform: translateY(0); } }
 
 .hero-role {
   font-family: var(--font-mono);
@@ -547,17 +694,17 @@ section { position: relative; z-index: 1; padding: 110px 48px; }
   -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
   padding: 20px 0 0;
 }
+.marquee-inner {
+  display: flex;
+  will-change: transform;
+}
 .marquee-track {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   gap: 56px;
   padding-right: 56px;
-  animation: marquee 30s linear infinite;
-  will-change: transform;
 }
-.marquee:hover .marquee-track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-100%); } }
 .marquee-item {
   display: flex;
   align-items: center;
@@ -1206,5 +1353,6 @@ section { position: relative; z-index: 1; padding: 110px 48px; }
     transition-duration: 0.01ms !important;
   }
   .reveal, .reveal-left, .reveal-scale { opacity: 1; transform: none; }
-  .marquee-track { animation: none; }
+  .tmask-inner { transform: none; }
+  .hero-name .ltr { transform: none; }
 }

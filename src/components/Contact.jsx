@@ -1,4 +1,5 @@
 import React from 'react';
+import Slot from './Slot';
 
 const EmailIcon    = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
 const PhoneIcon    = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6 6l.88-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 16.92z"/></svg>;
@@ -17,8 +18,8 @@ export default function Contact() {
 
         <div className="contact-card glass-card reveal delay-1">
           <h2 className="contact-title">
-            Have a project in mind?<br />
-            <span className="grad-text">Let's build it together.</span>
+            <span className="tmask"><span className="tmask-inner">Have a project in mind?</span></span>
+            <span className="tmask"><span className="tmask-inner delay-2"><span className="grad-text">Let's build it together.</span></span></span>
           </h2>
           <p className="contact-sub">
             I'm always open to discussing new opportunities, exciting projects, or collaborations.
@@ -26,10 +27,10 @@ export default function Contact() {
           </p>
           <div className="contact-cta-row">
             <a href="mailto:aryamansharma.it24@gmail.com" className="btn-glow">
-              <SendIcon /> <span>Say Hello</span>
+              <SendIcon /> <Slot>Say Hello</Slot>
             </a>
             <a href="/Aryaman_Sharma_Resume.pdf" download="Aryaman_Sharma_Resume.pdf" className="btn-glass">
-              <span>Download Resume</span>
+              <Slot>Download Resume</Slot>
             </a>
           </div>
           <div className="contact-chips">

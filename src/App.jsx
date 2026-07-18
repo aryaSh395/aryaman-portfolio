@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Lenis from 'lenis';
 import Navbar from './components/Navbar';
+import SideNav from './components/SideNav';
+import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import About from './components/About';
@@ -15,6 +18,8 @@ const ArrowUpIcon = () => (
   </svg>
 );
 
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export default function App() {
   const dotRef  = useRef(null);
   const ringRef = useRef(null);
@@ -23,6 +28,53 @@ export default function App() {
   const ring    = useRef({ x: 0, y: 0 });
   const raf     = useRef(null);
   const [showTop, setShowTop] = useState(false);
+  const [intro, setIntro] = useState(() => !reducedMotion());
+
+  // ── Lenis smooth scroll (skipped for reduced motion)
+  useEffect(() => {
+    if (reducedMotion()) return;
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    window.__lenis = lenis;
+    window.__lenisVelocity = 0;
+    lenis.on('scroll', (e) => { window.__lenisVelocity = e.velocity; });
+
+    let rafId;
+    const loop = (time) => { lenis.raf(time); rafId = requestAnimationFrame(loop); };
+    rafId = requestAnimationFrame(loop);
+
+    // Smooth-scroll all in-page anchors through lenis (nav, buttons, scroll cue)
+    const onClick = (e) => {
+      const a = e.target.closest?.('a[href^="#"]');
+      if (!a) return;
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -90, duration: 1.4 });
+    };
+    document.addEventListener('click', onClick);
+
+    return () => {
+      document.removeEventListener('click', onClick);
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      delete window.__lenis;
+    };
+  }, []);
+
+  // ── Freeze scroll while the preloader is up; flag the body when intro ends
+  useEffect(() => {
+    if (intro) {
+      window.__lenis?.stop();
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      window.__lenis?.start();
+      document.documentElement.style.overflow = '';
+      document.body.classList.add('intro-done');
+    }
+  }, [intro]);
 
   useEffect(() => {
     const finePointer = window.matchMedia('(pointer: fine)').matches;
@@ -34,7 +86,6 @@ export default function App() {
         dotRef.current.style.left = e.clientX + 'px';
         dotRef.current.style.top  = e.clientY + 'px';
       }
-      // Spotlight: update only the card under the pointer
       const card = e.target.closest?.('.glass-card');
       if (card) {
         const r = card.getBoundingClientRect();
@@ -55,7 +106,7 @@ export default function App() {
     if (finePointer) tick();
     window.addEventListener('mousemove', onMove);
 
-    // ── Cursor hover effect (event delegation, survives re-renders)
+    // ── Cursor hover effect
     const onOver = (e) => {
       if (e.target.closest?.('a, button, [data-hover]')) ringRef.current?.classList.add('hovered');
       else ringRef.current?.classList.remove('hovered');
@@ -71,25 +122,31 @@ export default function App() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // ── Scroll reveal
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseover', onOver);
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf.current);
+    };
+  }, []);
+
+  // ── Scroll reveal — armed only after the preloader lifts, so above-the-fold
+  //    elements don't animate hidden behind the curtain
+  useEffect(() => {
+    if (intro) return;
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
     const observer  = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); }),
       { threshold: 0.12 }
     );
     revealEls.forEach(el => observer.observe(el));
-
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseover', onOver);
-      window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(raf.current);
-      observer.disconnect();
-    };
-  }, []);
+    return () => observer.disconnect();
+  }, [intro]);
 
   return (
     <>
+      {intro && <Preloader onDone={() => setIntro(false)} />}
+
       {/* Cursor */}
       <div ref={dotRef}  className="cursor-dot" />
       <div ref={ringRef} className="cursor-ring" />
@@ -106,6 +163,7 @@ export default function App() {
       </div>
 
       <Navbar />
+      <SideNav />
       <main style={{ position: 'relative', zIndex: 1 }}>
         <Hero />
         <Marquee />

@@ -11,7 +11,7 @@ export default function Education() {
       <div className="section-inner" style={{ maxWidth: 860 }}>
         <div className="section-head reveal">
           <div className="section-kicker">02 — education</div>
-          <h2 className="section-title">Where I <span className="grad-text">studied</span></h2>
+          <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Where I <span className="grad-text">studied</span></span></span></h2>
         </div>
 
         <div className="edu-card glass-card reveal delay-1">

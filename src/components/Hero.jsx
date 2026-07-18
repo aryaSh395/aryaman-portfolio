@@ -1,5 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HeroCanvas from './HeroCanvas';
+import Slot from './Slot';
+
+/* Letter-split word: each character rises out of its own mask, staggered */
+function Word({ text, className, base = 0 }) {
+  const span = text.length - 1 || 1;
+  return (
+    <span className={className}>
+      {text.split('').map((ch, i) => (
+        <span className="ltr-mask" key={i}>
+          <span className="ltr" style={{ '--i': base + i, '--p': i / span }}>{ch}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
 
 const LinkedInIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
@@ -79,9 +94,9 @@ export default function Hero() {
         Available for new opportunities
       </div>
 
-      <h1 className="hero-name reveal delay-1">
-        ARYAMAN
-        <span className="line-2">SHARMA</span>
+      <h1 className="hero-name" aria-label="Aryaman Sharma">
+        <Word text="ARYAMAN" />
+        <Word text="SHARMA" className="line-2" base={5} />
       </h1>
 
       <div className="hero-role reveal delay-2" aria-label="Shopify, Full Stack, .NET and Flutter developer">
@@ -98,13 +113,13 @@ export default function Hero() {
 
       <div className="hero-btns reveal delay-3">
         <MagneticBtn href="#projects" className="btn-glow">
-          <span>View My Work</span> <ArrowIcon />
+          <Slot>View My Work</Slot> <ArrowIcon />
         </MagneticBtn>
         <MagneticBtn href="https://linkedin.com/in/aryaman-sharma-807562107/" className="btn-glass">
-          <LinkedInIcon /> <span>LinkedIn</span>
+          <LinkedInIcon /> <Slot>LinkedIn</Slot>
         </MagneticBtn>
         <MagneticBtn href="mailto:aryamansharma.it24@gmail.com" className="btn-glass">
-          <EmailIcon /> <span>Email Me</span>
+          <EmailIcon /> <Slot>Email Me</Slot>
         </MagneticBtn>
       </div>
 

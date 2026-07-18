@@ -75,7 +75,7 @@ export default function Projects() {
       <div className="section-inner">
         <div className="section-head reveal" style={{ textAlign: 'center' }}>
           <div className="section-kicker" style={{ justifyContent: 'center' }}>05 — projects</div>
-          <h2 className="section-title">Featured <span className="grad-text">work</span></h2>
+          <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Featured <span className="grad-text">work</span></span></span></h2>
         </div>
         <div className="projects-grid">
           {PROJECTS.map((p, i) => (

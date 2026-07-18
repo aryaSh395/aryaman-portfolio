@@ -16,7 +16,7 @@ export default function Skills() {
       <div className="section-inner">
         <div className="section-head reveal" style={{ textAlign: 'center' }}>
           <div className="section-kicker" style={{ justifyContent: 'center' }}>04 — skills</div>
-          <h2 className="section-title">My <span className="grad-text">toolbox</span></h2>
+          <h2 className="section-title"><span className="tmask"><span className="tmask-inner">My <span className="grad-text">toolbox</span></span></span></h2>
         </div>
         <div className="skills-grid">
           {SKILLS.map(({ icon, title, tags }, i) => (

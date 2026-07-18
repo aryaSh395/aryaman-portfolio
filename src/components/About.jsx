@@ -25,7 +25,7 @@ export default function About() {
         <div className="reveal-left">
           <div className="section-head" style={{ marginBottom: 0 }}>
             <div className="section-kicker">01 — about</div>
-            <h2 className="section-title">Building for the <span className="grad-text">web, end to end</span></h2>
+            <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Building for the <span className="grad-text">web, end to end</span></span></span></h2>
             <p className="about-text" style={{ marginTop: 24 }}>
               I'm a passionate <strong>Shopify Developer</strong> with hands-on experience across
               Shopify apps and themes, <strong>.NET</strong>, <strong>full-stack development</strong>, and
