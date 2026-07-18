@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { scramble, prefersReducedMotion } from '../fx';
 
 const SECTIONS = [
   { label: 'HOME',       href: '#hero'       },
@@ -13,6 +14,7 @@ const SECTIONS = [
 /* alche-style side progress rail: ticks + labels, active tick extends */
 export default function SideNav() {
   const [active, setActive] = useState('#hero');
+  const navRef = useRef(null);
 
   useEffect(() => {
     const handler = () => {
@@ -27,8 +29,15 @@ export default function SideNav() {
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
+  // scramble the newly active label (alche ScrambleText behaviour)
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const el = navRef.current?.querySelector(`a[href="${active}"] .sidenav-label`);
+    if (el) return scramble(el, { holdMs: 0 });
+  }, [active]);
+
   return (
-    <nav className="sidenav" aria-label="Section progress">
+    <nav className="sidenav" aria-label="Section progress" ref={navRef}>
       {SECTIONS.map(({ label, href }) => (
         <a key={href} href={href}
           className={`sidenav-item${active === href ? ' active' : ''}`}>

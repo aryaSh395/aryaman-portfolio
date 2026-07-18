@@ -13,16 +13,17 @@ const SKILLS = [
 export default function Skills() {
   return (
     <section id="skills">
+      <div className="ghost" data-ghost="-1" aria-hidden>SKILLS</div>
       <div className="section-inner">
         <div className="section-head reveal" style={{ textAlign: 'center' }}>
-          <div className="section-kicker" style={{ justifyContent: 'center' }}>04 — skills</div>
+          <div className="section-kicker" style={{ justifyContent: 'center' }} data-scramble>04 — skills</div>
           <h2 className="section-title"><span className="tmask"><span className="tmask-inner">My <span className="grad-text">toolbox</span></span></span></h2>
         </div>
         <div className="skills-grid">
           {SKILLS.map(({ icon, title, tags }, i) => (
             <div key={title} className={`skill-card glass-card reveal delay-${i + 1}`}>
               <div className="skill-card-header">
-                <div className="skill-card-icon">{icon}</div>
+                <div className="skill-card-icon pop">{icon}</div>
                 <span className="skill-card-title">{title}</span>
               </div>
               <div className="skill-card-count">{String(tags.length).padStart(2, '0')} technologies</div>

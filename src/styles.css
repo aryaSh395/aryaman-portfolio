@@ -360,8 +360,66 @@ a:hover .slot-b, button:hover .slot-b { transform: translateY(0); }
 .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(109,112,246,0.5), inset 0 1px 0 rgba(255,255,255,0.2); }
 
 /* ─── SECTION COMMONS ─── */
-section { position: relative; z-index: 1; padding: 110px 48px; }
-.section-inner { max-width: 1120px; margin: 0 auto; }
+section { position: relative; z-index: 1; padding: 110px 48px; overflow-x: clip; }
+.section-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+
+/* ─── GHOST PARALLAX WORDS ─── */
+.ghost {
+  position: absolute;
+  top: 24px; left: 0; right: 0;
+  z-index: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(80px, 15vw, 200px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.055);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ─── PER-CHAR PARAGRAPH FADE ─── */
+.char-fade .char {
+  opacity: 0;
+  transition: opacity 1.4s linear;
+  transition-delay: calc(var(--ci, 0) * 5ms);
+}
+.revealed .char-fade .char,
+.char-fade.revealed .char { opacity: 1; }
+
+/* ─── SVG MARKER DRAW (hand-drawn loop around a phrase) ─── */
+.marker-wrap { position: relative; display: inline-block; }
+.marker {
+  position: absolute;
+  inset: -0.35em -0.5em -0.45em;
+  width: calc(100% + 1em);
+  height: calc(100% + 0.8em);
+  overflow: visible;
+  pointer-events: none;
+}
+.marker path {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.75;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.65, 0, 0.35, 1) 1.2s;
+}
+body.intro-done .revealed .marker path { stroke-dashoffset: 0; }
+
+/* ─── POP REVEALS (back.out scale, alche icon entrances) ─── */
+.reveal:not(.revealed) .pop,
+.reveal-left:not(.revealed) .pop,
+.reveal-scale:not(.revealed) .pop {
+  transform: scale(0.4);
+  opacity: 0;
+}
 
 .section-head { margin-bottom: 56px; }
 .section-kicker {
@@ -1344,6 +1402,11 @@ body.intro-done .hero-name .ltr {
   .marquee-track { gap: 36px; padding-right: 36px; }
 }
 
+/* pop transition — declared late so it wins ties with per-icon rules */
+.pop {
+  transition: transform 0.6s var(--ease-bounce), opacity 0.4s ease, box-shadow 0.3s;
+}
+
 /* ─── REDUCED MOTION ─── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1355,4 +1418,15 @@ body.intro-done .hero-name .ltr {
   .reveal, .reveal-left, .reveal-scale { opacity: 1; transform: none; }
   .tmask-inner { transform: none; }
   .hero-name .ltr { transform: none; }
+  .char-fade .char { opacity: 1; }
+  .reveal:not(.revealed) .pop,
+  .reveal-left:not(.revealed) .pop,
+  .reveal-scale:not(.revealed) .pop { transform: none; opacity: 1; }
+  .marker path { stroke-dashoffset: 0; }
+  .ghost { display: none; }
+}
+
+/* mobile: ghost words scale down, keep readable */
+@media (max-width: 768px) {
+  .ghost { font-size: 26vw; top: 36px; -webkit-text-stroke-color: rgba(255,255,255,0.04); }
 }

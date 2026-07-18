@@ -11,9 +11,10 @@ const SendIcon     = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentC
 export default function Contact() {
   return (
     <section id="contact">
+      <div className="ghost" data-ghost="-1" aria-hidden>CONTACT</div>
       <div className="section-inner">
         <div className="section-head reveal" style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div className="section-kicker" style={{ justifyContent: 'center' }}>06 — contact</div>
+          <div className="section-kicker" style={{ justifyContent: 'center' }} data-scramble>06 — contact</div>
         </div>
 
         <div className="contact-card glass-card reveal delay-1">

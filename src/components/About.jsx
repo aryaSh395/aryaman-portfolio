@@ -1,5 +1,23 @@
 import React from 'react';
 
+/* SplitText-style per-char fade (alche: stagger .004, duration 2) */
+const BIO = [
+  { t: "I'm a passionate " }, { t: 'Shopify Developer', b: true },
+  { t: ' with hands-on experience across Shopify apps and themes, ' },
+  { t: '.NET', b: true }, { t: ', ' }, { t: 'full-stack development', b: true },
+  { t: ', and cross-platform mobile apps with Flutter. I like shipping products that are fast, polished, and genuinely useful.' },
+];
+
+function CharFade({ segments }) {
+  let ci = 0;
+  return segments.map((seg, si) => {
+    const chars = seg.t.split('').map((ch) => (
+      <span key={ci} className="char" style={{ '--ci': ci++ }}>{ch === ' ' ? ' ' : ch}</span>
+    ));
+    return seg.b ? <strong key={si}>{chars}</strong> : <React.Fragment key={si}>{chars}</React.Fragment>;
+  });
+}
+
 const icons = {
   Location: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>,
   Email:    () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
@@ -21,16 +39,14 @@ const INFO = [
 export default function About() {
   return (
     <section id="about">
+      <div className="ghost" data-ghost="1" aria-hidden>ABOUT</div>
       <div className="section-inner about-grid">
         <div className="reveal-left">
           <div className="section-head" style={{ marginBottom: 0 }}>
-            <div className="section-kicker">01 — about</div>
+            <div className="section-kicker" data-scramble>01 — about</div>
             <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Building for the <span className="grad-text">web, end to end</span></span></span></h2>
-            <p className="about-text" style={{ marginTop: 24 }}>
-              I'm a passionate <strong>Shopify Developer</strong> with hands-on experience across
-              Shopify apps and themes, <strong>.NET</strong>, <strong>full-stack development</strong>, and
-              cross-platform mobile apps with Flutter. I like shipping products that are fast,
-              polished, and genuinely useful.
+            <p className="about-text char-fade" style={{ marginTop: 24 }} aria-label="I'm a passionate Shopify Developer with hands-on experience across Shopify apps and themes, .NET, full-stack development, and cross-platform mobile apps with Flutter. I like shipping products that are fast, polished, and genuinely useful.">
+              <CharFade segments={BIO} />
             </p>
             <div className="about-highlight">
               <span className="accent">const</span> focus = [<span className="accent">'e-commerce'</span>, <span className="accent">'web apps'</span>, <span className="accent">'clean UX'</span>];
@@ -42,7 +58,7 @@ export default function About() {
             const Icon = icons[label];
             return (
               <div key={label} className={`info-item glass-card reveal delay-${i % 3 + 1}`}>
-                <div className="info-icon"><Icon /></div>
+                <div className="info-icon pop"><Icon /></div>
                 <div>
                   <div className="info-label">{label}</div>
                   {href

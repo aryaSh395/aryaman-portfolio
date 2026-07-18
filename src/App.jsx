@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
+import { scramble } from './fx';
 import Navbar from './components/Navbar';
 import SideNav from './components/SideNav';
 import Preloader from './components/Preloader';
@@ -113,14 +114,31 @@ export default function App() {
     };
     if (finePointer) window.addEventListener('mouseover', onOver);
 
+    // ── Ghost word parallax: huge outlined words drift sideways with scroll
+    const ghosts = reducedMotion() ? [] : Array.from(document.querySelectorAll('[data-ghost]'));
+    let ghostRaf = null;
+    const applyGhosts = () => {
+      ghostRaf = null;
+      const vh = window.innerHeight;
+      for (const el of ghosts) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) continue;
+        const n = (vh - r.top) / (vh + r.height); // 0 entering → 1 leaving
+        const dir = Number(el.dataset.ghost) || 1;
+        el.style.transform = `translateX(${((n - 0.5) * -180 * dir).toFixed(1)}px)`;
+      }
+    };
+
     // ── Scroll progress + back-to-top
     const onScroll = () => {
       const total = document.body.scrollHeight - window.innerHeight;
       const prog  = total > 0 ? window.scrollY / total : 0;
       if (progRef.current) progRef.current.style.transform = `scaleX(${prog})`;
       setShowTop(window.scrollY > 600);
+      if (ghosts.length && ghostRaf === null) ghostRaf = requestAnimationFrame(applyGhosts);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    applyGhosts();
 
     return () => {
       window.removeEventListener('mousemove', onMove);
@@ -134,9 +152,20 @@ export default function App() {
   //    elements don't animate hidden behind the curtain
   useEffect(() => {
     if (intro) return;
+    const reduced = reducedMotion();
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
     const observer  = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); }),
+      (entries) => entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('revealed');
+        // scramble any labels inside the newly revealed block, once
+        if (!reduced) {
+          e.target.querySelectorAll('[data-scramble]:not([data-scrambled])').forEach(el => {
+            el.setAttribute('data-scrambled', '');
+            scramble(el);
+          });
+        }
+      }),
       { threshold: 0.12 }
     );
     revealEls.forEach(el => observer.observe(el));

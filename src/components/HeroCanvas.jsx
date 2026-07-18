@@ -67,9 +67,23 @@ export default function HeroCanvas() {
       scene.add(new THREE.Points(geo, mat));
 
       const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+      // Mouse ripple (alche fluid-shader analog): cursor dents the wave surface
+      const ndc = new THREE.Vector2();
+      const raycaster = new THREE.Raycaster();
+      const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+      const hit = new THREE.Vector3(9999, 0, 9999);
+      const ripple = { x: 9999, z: 9999, strength: 0 };
       onMove = (e) => {
         mouse.tx = (e.clientX / window.innerWidth)  * 2 - 1;
         mouse.ty = (e.clientY / window.innerHeight) * 2 - 1;
+        const r = wrap.getBoundingClientRect();
+        if (e.clientY >= r.top && e.clientY <= r.bottom) {
+          ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+          raycaster.setFromCamera(ndc, camera);
+          if (raycaster.ray.intersectPlane(groundPlane, hit)) ripple.targetOn = true;
+        } else {
+          ripple.targetOn = false;
+        }
       };
       window.addEventListener('pointermove', onMove, { passive: true });
 
@@ -94,16 +108,26 @@ export default function HeroCanvas() {
         mouse.x += (mouse.tx - mouse.x) * 0.06;
         mouse.y += (mouse.ty - mouse.y) * 0.06;
 
+        // ease the ripple centre toward the cursor hit point
+        ripple.strength += ((ripple.targetOn ? 1 : 0) - ripple.strength) * 0.06;
+        ripple.x += (hit.x - ripple.x) * 0.1;
+        ripple.z += (hit.z - ripple.z) * 0.1;
+
         const p = geo.attributes.position.array;
         const c = geo.attributes.color.array;
         let i = 0;
         for (let x = 0; x < COLS; x++) {
           for (let z = 0; z < ROWS; z++) {
             const px = p[i * 3], pz = p[i * 3 + 2];
-            const y =
+            let y =
               Math.sin(px * 0.55 + t * 0.9) * 0.45 +
               Math.sin(pz * 0.7 + t * 0.7) * 0.35 +
               Math.sin((px + pz) * 0.4 + t * 0.5) * 0.25;
+            if (ripple.strength > 0.01) {
+              const dx = px - ripple.x, dz = pz - ripple.z;
+              const d2 = dx * dx + dz * dz;
+              if (d2 < 9) y -= Math.exp(-d2 / 1.6) * 1.1 * ripple.strength;
+            }
             p[i * 3 + 1] = y;
             const k = THREE.MathUtils.clamp((y + 1) / 2, 0, 1);
             tmp.copy(cIndigo).lerp(cCyan, k);

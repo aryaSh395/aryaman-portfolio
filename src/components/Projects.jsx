@@ -72,16 +72,17 @@ function TiltCard({ children, className }) {
 export default function Projects() {
   return (
     <section id="projects">
+      <div className="ghost" data-ghost="1" aria-hidden>WORK</div>
       <div className="section-inner">
         <div className="section-head reveal" style={{ textAlign: 'center' }}>
-          <div className="section-kicker" style={{ justifyContent: 'center' }}>05 — projects</div>
+          <div className="section-kicker" style={{ justifyContent: 'center' }} data-scramble>05 — projects</div>
           <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Featured <span className="grad-text">work</span></span></span></h2>
         </div>
         <div className="projects-grid">
           {PROJECTS.map((p, i) => (
             <TiltCard key={p.title} className={`project-card glass-card reveal delay-${i % 2 + 1}`}>
               <div className="project-top">
-                <div className="project-icon">{p.icon}</div>
+                <div className="project-icon pop">{p.icon}</div>
                 <span className="project-num">{String(i + 1).padStart(2, '0')}</span>
               </div>
               <div className="project-body">

@@ -8,15 +8,16 @@ const StarIcon   = () => <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" s
 export default function Education() {
   return (
     <section id="education">
+      <div className="ghost" data-ghost="-1" aria-hidden>EDUCATION</div>
       <div className="section-inner" style={{ maxWidth: 860 }}>
         <div className="section-head reveal">
-          <div className="section-kicker">02 — education</div>
+          <div className="section-kicker" data-scramble>02 — education</div>
           <h2 className="section-title"><span className="tmask"><span className="tmask-inner">Where I <span className="grad-text">studied</span></span></span></h2>
         </div>
 
         <div className="edu-card glass-card reveal delay-1">
           <div className="edu-top">
-            <div className="edu-icon-circle"><GradIcon /></div>
+            <div className="edu-icon-circle pop"><GradIcon /></div>
             <div className="edu-head-text">
               <div className="edu-school">Jaipur Engineering College &amp; Research Centre</div>
               <div className="edu-degree">B.Tech in Information Technology · Rajasthan, India</div>
