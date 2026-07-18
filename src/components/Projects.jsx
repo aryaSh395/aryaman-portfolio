@@ -7,20 +7,20 @@ const BookIcon   = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentCol
 
 const PROJECTS = [
   {
-    icon: <HeartIcon />, title: 'Mental Health Care App – Mental Health Tracker',
+    icon: <HeartIcon />, title: 'Mental Health Care App', subtitle: 'mood tracking · mindfulness · Flutter',
     bullets: [
-      'Cross-platform mental health care app using Flutter with mood tracking, mindfulness exercises, and mental health resources.',
-      'Advanced to the regional level in the Google AMD Hackathon showcasing strong problem-solving and user-centered design skills.',
-      'Deployed on Android, ensuring a seamless and responsive user experience across devices.',
+      'Cross-platform mental health app built with Flutter — mood tracking, mindfulness exercises, and curated resources.',
+      'Advanced to the regional level of the Google + AMD Hackathon on the strength of its user-centered design.',
+      'Deployed on Android with a seamless, responsive experience across devices.',
     ],
-    tags: [{ label: 'Flutter', bg: 'rgba(99,102,241,0.15)', color: '#a5b4fc', border: 'rgba(99,102,241,0.3)' }],
+    tags: [{ label: 'Flutter', bg: 'rgba(109,112,246,0.14)', color: '#b3bcff', border: 'rgba(109,112,246,0.3)' }],
   },
   {
-    icon: <FoodIcon />, title: 'AROMA – Food Delivery Application',
+    icon: <FoodIcon />, title: 'AROMA', subtitle: 'preference-based food delivery',
     bullets: [
-      "Preference-based food delivery web app using Node.js, Express, JavaScript, HTML, and CSS.",
-      "Integrated Yelp's API to recommend restaurants, enhancing user satisfaction and engagement.",
-      "Designed intuitive and responsive front-end adapting to various user inputs.",
+      'Preference-based food delivery web app using Node.js, Express, JavaScript, HTML, and CSS.',
+      "Integrated Yelp's API to recommend restaurants, lifting satisfaction and engagement.",
+      'Designed an intuitive, responsive front end that adapts to user inputs.',
     ],
     tags: [
       { label: 'Node.js',  bg: 'rgba(52,211,153,0.12)', color: '#6ee7b7', border: 'rgba(52,211,153,0.3)' },
@@ -29,20 +29,20 @@ const PROJECTS = [
     ],
   },
   {
-    icon: <ShieldIcon />, title: 'PORT SCANNER TOOL – Cyber Security Tool',
+    icon: <ShieldIcon />, title: 'Port Scanner Tool', subtitle: 'cyber security · networking',
     bullets: [
-      'Port scanner using Python enabling users to identify open ports on a target IP address or hostname.',
-      "Utilized Python's socket module and Py library for efficient handling of IP addresses and network connections.",
-      'Increased efficiency of cybersecurity audits by providing quick and accurate scans.',
+      'Python port scanner that identifies open ports on a target IP address or hostname.',
+      "Built on Python's socket module for efficient handling of IPs and network connections.",
+      'Sped up cybersecurity audits with quick, accurate scans.',
     ],
     tags: [{ label: 'Python', bg: 'rgba(251,191,36,0.12)', color: '#fde68a', border: 'rgba(251,191,36,0.3)' }],
   },
   {
-    icon: <BookIcon />, title: 'BOOK STORE WEB APPLICATION – Bookstore Management',
+    icon: <BookIcon />, title: 'Book Store Web App', subtitle: 'MERN stack · full CRUD',
     bullets: [
-      'Comprehensive bookstore management app using the MERN stack (MongoDB, Express.js, React.js, Node.js).',
-      'Implemented secure user authentication and authorization, ensuring restricted access to critical features.',
-      'Developed responsive front-end with seamless navigation using React Router.',
+      'Comprehensive bookstore management app on the MERN stack (MongoDB, Express, React, Node).',
+      'Secure authentication and authorization gating access to critical features.',
+      'Responsive front end with seamless navigation via React Router.',
     ],
     tags: [
       { label: 'MERN Stack',   bg: 'rgba(167,139,250,0.12)', color: '#c4b5fd', border: 'rgba(167,139,250,0.3)' },
@@ -51,17 +51,18 @@ const PROJECTS = [
   },
 ];
 
-function TiltCard({ children, className, style }) {
+function TiltCard({ children, className }) {
   const ref = useRef(null);
   const onMove = (e) => {
-    const r  = ref.current.getBoundingClientRect();
-    const x  = (e.clientX - r.left) / r.width  - 0.5;
-    const y  = (e.clientY - r.top)  / r.height - 0.5;
-    ref.current.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-8px)`;
+    const r = ref.current.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    ref.current.style.transform = `perspective(700px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-8px)`;
   };
   const onLeave = () => { ref.current.style.transform = ''; };
   return (
-    <div ref={ref} className={className} style={{ ...style, transition: 'transform 0.15s ease, box-shadow 0.3s, border-color 0.3s' }}
+    <div ref={ref} className={className}
+      style={{ transition: 'transform 0.15s ease, box-shadow 0.3s, border-color 0.3s' }}
       onMouseMove={onMove} onMouseLeave={onLeave}>
       {children}
     </div>
@@ -72,25 +73,31 @@ export default function Projects() {
   return (
     <section id="projects">
       <div className="section-inner">
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: 64 }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>Projects</div>
-          <h2 className="section-title">Featured <span className="grad-text">Work</span></h2>
+        <div className="section-head reveal" style={{ textAlign: 'center' }}>
+          <div className="section-kicker" style={{ justifyContent: 'center' }}>05 — projects</div>
+          <h2 className="section-title">Featured <span className="grad-text">work</span></h2>
         </div>
         <div className="projects-grid">
           {PROJECTS.map((p, i) => (
-            <TiltCard key={i} className={`project-card glass-card reveal delay-${i % 2 + 1}`}>
-              <div className="project-icon">{p.icon}</div>
-              <div className="project-title">{p.title}</div>
-              <ul className="project-bullets">
-                {p.bullets.map((b, j) => <li key={j}>{b}</li>)}
-              </ul>
-              <div className="project-tags">
-                {p.tags.map(t => (
-                  <span key={t.label} className="project-tag"
-                    style={{ background: t.bg, color: t.color, borderColor: t.border }}>
-                    {t.label}
-                  </span>
-                ))}
+            <TiltCard key={p.title} className={`project-card glass-card reveal delay-${i % 2 + 1}`}>
+              <div className="project-top">
+                <div className="project-icon">{p.icon}</div>
+                <span className="project-num">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <div className="project-body">
+                <div className="project-title">{p.title}</div>
+                <div className="project-subtitle">{p.subtitle}</div>
+                <ul className="project-bullets">
+                  {p.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                </ul>
+                <div className="project-tags">
+                  {p.tags.map(t => (
+                    <span key={t.label} className="project-tag"
+                      style={{ background: t.bg, color: t.color, borderColor: t.border }}>
+                      {t.label}
+                    </span>
+                  ))}
+                </div>
               </div>
             </TiltCard>
           ))}

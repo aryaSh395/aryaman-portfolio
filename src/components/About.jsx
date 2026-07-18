@@ -11,11 +11,11 @@ const icons = {
 
 const INFO = [
   { label: 'Location', value: 'Jaipur, India' },
-  { label: 'Email',    value: 'aryamansharma.it24@gmail.com' },
+  { label: 'Email',    value: 'aryamansharma.it24@gmail.com', href: 'mailto:aryamansharma.it24@gmail.com' },
   { label: 'Degree',   value: 'B.Tech Information Technology' },
-  { label: 'Phone',    value: '+91 7891039292' },
+  { label: 'Phone',    value: '+91 7891039292', href: 'tel:+917891039292' },
   { label: 'CGPA',     value: '9.0 / 10.0' },
-  { label: 'LinkedIn', value: 'linkedin.com/in/aryaman-sharma-807562107/', href: 'https://linkedin.com/in/aryaman-sharma-807562107/' },
+  { label: 'LinkedIn', value: 'aryaman-sharma', href: 'https://linkedin.com/in/aryaman-sharma-807562107/' },
 ];
 
 export default function About() {
@@ -23,12 +23,19 @@ export default function About() {
     <section id="about">
       <div className="section-inner about-grid">
         <div className="reveal-left">
-          <div className="section-tag">About Me</div>
-          <h2 className="section-title">About <span className="grad-text">Me</span></h2>
-          <p className="about-text" style={{ marginTop: 24 }}>
-            A passionate Shopify Developer with experience in Shopify development,
-            .Net development, Full Stack development and cross-platform applications.
-          </p>
+          <div className="section-head" style={{ marginBottom: 0 }}>
+            <div className="section-kicker">01 — about</div>
+            <h2 className="section-title">Building for the <span className="grad-text">web, end to end</span></h2>
+            <p className="about-text" style={{ marginTop: 24 }}>
+              I'm a passionate <strong>Shopify Developer</strong> with hands-on experience across
+              Shopify apps and themes, <strong>.NET</strong>, <strong>full-stack development</strong>, and
+              cross-platform mobile apps with Flutter. I like shipping products that are fast,
+              polished, and genuinely useful.
+            </p>
+            <div className="about-highlight">
+              <span className="accent">const</span> focus = [<span className="accent">'e-commerce'</span>, <span className="accent">'web apps'</span>, <span className="accent">'clean UX'</span>];
+            </div>
+          </div>
         </div>
         <div className="info-grid reveal delay-1">
           {INFO.map(({ label, value, href }, i) => {
@@ -39,7 +46,7 @@ export default function About() {
                 <div>
                   <div className="info-label">{label}</div>
                   {href
-                    ? <a href={href} target="_blank" rel="noreferrer" className="info-value" style={{ color: '#a5b4fc', textDecoration: 'none' }}>{value}</a>
+                    ? <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="info-value" style={{ color: 'var(--indigo-soft)', textDecoration: 'none' }}>{value}</a>
                     : <div className="info-value">{value}</div>
                   }
                 </div>

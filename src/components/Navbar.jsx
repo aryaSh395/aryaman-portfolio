@@ -32,7 +32,7 @@ export default function Navbar() {
     if (!el || !listRef.current) return;
     const listRect = listRef.current.getBoundingClientRect();
     const elRect   = el.getBoundingClientRect();
-    setPill({ left: elRect.left - listRect.left - 10, width: elRect.width + 20, opacity: 1 });
+    setPill({ left: elRect.left - listRect.left, width: elRect.width, opacity: 1 });
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Navbar() {
   useEffect(() => {
     const handler = () => {
       setScrolled(window.scrollY > 20);
-      const scrollY = window.scrollY + 100;
+      const scrollY = window.scrollY + 120;
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const el = document.querySelector(NAV_LINKS[i].href);
         if (el && el.offsetTop <= scrollY) { setActive(NAV_LINKS[i].href); break; }
@@ -73,7 +73,9 @@ export default function Navbar() {
     <>
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <div className="navbar-inner">
-          <a href="#hero" className="nav-logo">AS</a>
+          <a href="#hero" className="nav-logo">
+            <span className="accent">&lt;</span>AS<span className="accent">/&gt;</span><span className="blink">_</span>
+          </a>
 
           {/* Desktop nav */}
           <ul ref={listRef} className="nav-links" style={{ position: 'relative' }}
@@ -84,9 +86,9 @@ export default function Navbar() {
             <li aria-hidden style={{
               position: 'absolute', top: '50%', transform: 'translateY(-50%)',
               left: pill.left, width: pill.width, height: 32,
-              background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.22) 0%, rgba(139,92,246,0.10) 60%, transparent 100%)',
-              border: '1px solid rgba(99,102,241,0.25)', borderRadius: 99,
-              boxShadow: '0 0 18px rgba(99,102,241,0.3), 0 0 6px rgba(139,92,246,0.2)',
+              background: 'rgba(109,112,246,0.14)',
+              border: '1px solid rgba(109,112,246,0.28)', borderRadius: 99,
+              boxShadow: '0 0 16px rgba(109,112,246,0.25)',
               opacity: pill.opacity,
               transition: 'left 0.35s cubic-bezier(0.34,1.56,0.64,1), width 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s',
               pointerEvents: 'none', zIndex: 0,
@@ -104,11 +106,11 @@ export default function Navbar() {
           </ul>
 
           <a href="/Aryaman_Sharma_Resume.pdf" download="Aryaman_Sharma_Resume.pdf" className="nav-btn nav-btn-desktop">
-            <span>Download Resume</span> <DownloadIcon />
+            <span>Resume</span> <DownloadIcon />
           </a>
 
           {/* Hamburger */}
-          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu">
+          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu" aria-expanded={menuOpen}>
             <span className={`ham-line${menuOpen ? ' open' : ''}`} />
             <span className={`ham-line${menuOpen ? ' open' : ''}`} />
             <span className={`ham-line${menuOpen ? ' open' : ''}`} />
@@ -127,7 +129,7 @@ export default function Navbar() {
             </a>
           ))}
           <a href="/Aryaman_Sharma_Resume.pdf" download="Aryaman_Sharma_Resume.pdf"
-            className="nav-btn" style={{ marginTop: 16, justifyContent: 'center' }}
+            className="nav-btn" style={{ marginTop: 20, justifyContent: 'center', padding: '13px 28px' }}
             onClick={() => setMenuOpen(false)}>
             <span>Download Resume</span> <DownloadIcon />
           </a>

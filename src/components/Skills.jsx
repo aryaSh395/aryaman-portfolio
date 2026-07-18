@@ -5,18 +5,18 @@ const LayersIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentCol
 const WrenchIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>;
 
 const SKILLS = [
-  { icon: <CodeIcon />, title: 'Languages', tags: ['C/C++', 'HTML', 'CSS', 'JavaScript', 'C Sharp', 'Python', 'Java', 'SQL'] },
-  { icon: <LayersIcon />, title: 'Frameworks / Technologies', tags: ['React.js', 'Angular', 'Node.js', 'Docker', 'Bootstrap', 'Git'] },
-  { icon: <WrenchIcon />, title: 'Tools', tags: ['Shopify', 'Linux', 'Google Cloud', 'AWS', 'REST APIs', 'Android Studio', 'Flutter', 'Postman'] },
+  { icon: <CodeIcon />, title: 'Languages', tags: ['C/C++', 'HTML', 'CSS', 'JavaScript', 'C#', 'Python', 'Java', 'SQL'] },
+  { icon: <LayersIcon />, title: 'Frameworks', tags: ['React.js', 'Angular', 'Node.js', 'Docker', 'Bootstrap', 'Git'] },
+  { icon: <WrenchIcon />, title: 'Tools & Platforms', tags: ['Shopify', 'Linux', 'Google Cloud', 'AWS', 'REST APIs', 'Android Studio', 'Flutter', 'Postman'] },
 ];
 
 export default function Skills() {
   return (
     <section id="skills">
       <div className="section-inner">
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: 64 }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>Skills</div>
-          <h2 className="section-title">My <span className="grad-text">Skills</span></h2>
+        <div className="section-head reveal" style={{ textAlign: 'center' }}>
+          <div className="section-kicker" style={{ justifyContent: 'center' }}>04 — skills</div>
+          <h2 className="section-title">My <span className="grad-text">toolbox</span></h2>
         </div>
         <div className="skills-grid">
           {SKILLS.map(({ icon, title, tags }, i) => (
@@ -25,6 +25,7 @@ export default function Skills() {
                 <div className="skill-card-icon">{icon}</div>
                 <span className="skill-card-title">{title}</span>
               </div>
+              <div className="skill-card-count">{String(tags.length).padStart(2, '0')} technologies</div>
               <div className="skill-tags">
                 {tags.map(tag => <span key={tag} className="skill-tag">{tag}</span>)}
               </div>
