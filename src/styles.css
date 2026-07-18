@@ -391,28 +391,6 @@ section { position: relative; z-index: 1; padding: 110px 48px; overflow-x: clip;
 .revealed .char-fade .char,
 .char-fade.revealed .char { opacity: 1; }
 
-/* ─── SVG MARKER DRAW (hand-drawn loop around a phrase) ─── */
-.marker-wrap { position: relative; display: inline-block; }
-.marker {
-  position: absolute;
-  inset: -0.35em -0.5em -0.45em;
-  width: calc(100% + 1em);
-  height: calc(100% + 0.8em);
-  overflow: visible;
-  pointer-events: none;
-}
-.marker path {
-  fill: none;
-  stroke: var(--cyan);
-  stroke-width: 2;
-  stroke-linecap: round;
-  opacity: 0.75;
-  stroke-dasharray: 620;
-  stroke-dashoffset: 620;
-  transition: stroke-dashoffset 1.4s cubic-bezier(0.65, 0, 0.35, 1) 1.2s;
-}
-body.intro-done .revealed .marker path { stroke-dashoffset: 0; }
-
 /* ─── POP REVEALS (back.out scale, alche icon entrances) ─── */
 .reveal:not(.revealed) .pop,
 .reveal-left:not(.revealed) .pop,
@@ -1422,7 +1400,6 @@ body.intro-done .hero-name .ltr {
   .reveal:not(.revealed) .pop,
   .reveal-left:not(.revealed) .pop,
   .reveal-scale:not(.revealed) .pop { transform: none; opacity: 1; }
-  .marker path { stroke-dashoffset: 0; }
   .ghost { display: none; }
 }
 

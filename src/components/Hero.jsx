@@ -107,13 +107,8 @@ export default function Hero() {
       </div>
 
       <p className="hero-sub reveal delay-2">
-        I build <strong>scalable web applications</strong> and{' '}
-        <span className="marker-wrap"><strong>e-commerce experiences</strong>
-          <svg className="marker" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden>
-            <path d="M12 34 C 40 8, 190 4, 208 26 C 214 46, 130 58, 58 54 C 24 51, 8 44, 14 30" />
-          </svg>
-        </span>{' '}
-        that merchants and users love — from Shopify storefronts to full-stack products.
+        I build <strong>scalable web applications</strong> and <strong>e-commerce experiences</strong> that
+        merchants and users love — from Shopify storefronts to full-stack products.
       </p>
 
       <div className="hero-btns reveal delay-3">
