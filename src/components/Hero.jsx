@@ -77,7 +77,7 @@ function MagneticBtn({ href, className, children }) {
 }
 
 const STATS = [
-  { num: '2+',  label: 'Years Experience' },
+  { num: '4+',  label: 'Years Experience' },
   { num: '3',   label: 'Companies' },
   { num: '4+',  label: 'Projects Shipped' },
   { num: '9.0', label: 'CGPA / 10' },
