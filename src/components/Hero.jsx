@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import HeroCanvas from './HeroCanvas';
 
 const LinkedInIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
@@ -72,6 +73,7 @@ export default function Hero() {
 
   return (
     <section id="hero">
+      <HeroCanvas />
       <div className="hero-badge reveal">
         <span className="hero-badge-dot" />
         Available for new opportunities

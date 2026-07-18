@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Three.js Animation Lab — Portfolio Candidates</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: #05060a;
+        color: #f4f6fb;
+        font-family: 'JetBrains Mono', monospace;
+        overflow: hidden;
+        height: 100vh;
+      }
+      #canvas-wrap { position: fixed; inset: 0; }
+      canvas { display: block; }
+
+      .hud {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+        background: rgba(9,11,18,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 99px;
+        padding: 8px;
+        backdrop-filter: blur(16px);
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hud button {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        padding: 9px 18px;
+        border-radius: 99px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: #9aa5b8;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .hud button:hover { color: #f4f6fb; }
+      .hud button.active {
+        background: rgba(109,112,246,0.16);
+        border-color: rgba(109,112,246,0.35);
+        color: #c3c9ff;
+        box-shadow: 0 0 16px rgba(109,112,246,0.25);
+      }
+
+      .demo-label {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        text-align: center;
+        pointer-events: none;
+      }
+      .demo-label h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 4px;
+      }
+      .demo-label p { font-size: 12px; color: #9aa5b8; }
+      .fps {
+        position: fixed;
+        bottom: 28px;
+        right: 24px;
+        z-index: 10;
+        font-size: 11.5px;
+        color: #566072;
+      }
+      .fps .num { color: #22d3ee; }
+
+      /* Fake hero text overlay to judge readability behind content */
+      .fake-hero {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      body.show-hero .fake-hero { opacity: 1; }
+      .fake-hero h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(52px, 9vw, 110px);
+        font-weight: 700;
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+        text-align: center;
+      }
+      .fake-hero h1 span {
+        display: block;
+        background: linear-gradient(110deg, #b3bcff 0%, #cabcfd 45%, #7ceefb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .fake-hero p { margin-top: 18px; color: #9aa5b8; font-size: 14px; }
+      .hero-toggle {
+        position: fixed;
+        bottom: 28px;
+        left: 24px;
+        z-index: 10;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11.5px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(9,11,18,0.7);
+        color: #9aa5b8;
+        cursor: pointer;
+      }
+      .hero-toggle:hover { color: #f4f6fb; border-color: rgba(109,112,246,0.4); }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-wrap"></div>
+
+    <div class="hud" id="hud"></div>
+
+    <div class="fake-hero">
+      <h1>ARYAMAN<span>SHARMA</span></h1>
+      <p>{ preview: hero text readability check }</p>
+    </div>
+
+    <button class="hero-toggle" id="heroToggle">toggle hero text</button>
+
+    <div class="demo-label">
+      <h2 id="demoName"></h2>
+      <p id="demoDesc"></p>
+    </div>
+
+    <div class="fps">fps <span class="num" id="fps">--</span></div>
+
+    <script type="module" src="/src/three-demos.js"></script>
+  </body>
+</html>
