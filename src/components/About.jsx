@@ -29,11 +29,11 @@ const icons = {
 
 const INFO = [
   { label: 'Location', value: 'Jaipur, India' },
-  { label: 'Email',    value: 'aryamansharma.it24@gmail.com', href: 'mailto:aryamansharma.it24@gmail.com' },
+  { label: 'Email',    value: 'aryamansharma.it24@gmail.com', href: 'mailto:aryamansharma.it24@gmail.com', compact: true },
   { label: 'Degree',   value: 'B.Tech Information Technology' },
   { label: 'Phone',    value: '+91 7891039292', href: 'tel:+917891039292' },
   { label: 'CGPA',     value: '9.0 / 10.0' },
-  { label: 'LinkedIn', value: 'aryaman-sharma', href: 'https://linkedin.com/in/aryaman-sharma-807562107/' },
+  { label: 'LinkedIn', value: 'aryaman-sharma-807562107', href: 'https://www.linkedin.com/in/aryaman-sharma-807562107/', compact: true },
 ];
 
 export default function About() {
@@ -54,16 +54,17 @@ export default function About() {
           </div>
         </div>
         <div className="info-grid reveal delay-1">
-          {INFO.map(({ label, value, href }, i) => {
+          {INFO.map(({ label, value, href, compact }, i) => {
             const Icon = icons[label];
+            const cls = `info-value${compact ? ' info-value-sm' : ''}`;
             return (
               <div key={label} className={`info-item glass-card reveal delay-${i % 3 + 1}`}>
                 <div className="info-icon pop"><Icon /></div>
-                <div>
+                <div style={{ minWidth: 0 }}>
                   <div className="info-label">{label}</div>
                   {href
-                    ? <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="info-value" style={{ color: 'var(--indigo-soft)', textDecoration: 'none' }}>{value}</a>
-                    : <div className="info-value">{value}</div>
+                    ? <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className={cls} style={{ color: 'var(--indigo-soft)', textDecoration: 'none' }}>{value}</a>
+                    : <div className={cls}>{value}</div>
                   }
                 </div>
               </div>

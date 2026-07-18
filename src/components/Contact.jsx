@@ -44,7 +44,7 @@ export default function Contact() {
         <div className="contact-footer">
           <div className="footer-socials">
             {[
-              { href: 'https://linkedin.com/in/aryaman-sharma-807562107/', icon: <LinkedInIcon />, label: 'LinkedIn' },
+              { href: 'https://www.linkedin.com/in/aryaman-sharma-807562107/', icon: <LinkedInIcon />, label: 'LinkedIn' },
               { href: 'https://github.com/aryaSh395', icon: <GithubIcon />, label: 'GitHub' },
               { href: 'mailto:aryamansharma.it24@gmail.com', icon: <EmailIcon />, label: 'Email' },
             ].map(({ href, icon, label }) => (

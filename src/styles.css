@@ -837,6 +837,16 @@ body.intro-done .hero-name .ltr {
   word-break: break-word;
   line-height: 1.45;
 }
+/* long single-token values (email, profile ids): keep on one line */
+.info-value-sm {
+  display: block;
+  font-size: 11.5px;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: normal;
+}
 
 /* ─── EDUCATION ─── */
 .edu-card { padding: 36px; }

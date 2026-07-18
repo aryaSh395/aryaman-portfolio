@@ -115,7 +115,7 @@ export default function Hero() {
         <MagneticBtn href="#projects" className="btn-glow">
           <Slot>View My Work</Slot> <ArrowIcon />
         </MagneticBtn>
-        <MagneticBtn href="https://linkedin.com/in/aryaman-sharma-807562107/" className="btn-glass">
+        <MagneticBtn href="https://www.linkedin.com/in/aryaman-sharma-807562107/" className="btn-glass">
           <LinkedInIcon /> <Slot>LinkedIn</Slot>
         </MagneticBtn>
         <MagneticBtn href="mailto:aryamansharma.it24@gmail.com" className="btn-glass">
